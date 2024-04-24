@@ -4,6 +4,8 @@ import difflib
 import argparse
 import sys
 import os
+import re
+import pystow
 import requests
 from dateutil import parser as du
 
@@ -248,8 +250,6 @@ class Publication:
         language = "en"
         arabic_chars = re.compile('[ابتثجحخدذرزسشصضطظعغفقكلمنهوي]')
         # If the label contains Arabic characters, set the language to "ar"
-        if label != arabic_chars.sub('', label):
-            language = "ar"
         self.statements.append(wdi_core.WDMonolingualText(self.title, PROPS['title'], language=language, references=[self.reference]))
 
         if self.publication_date:
@@ -660,15 +660,13 @@ class PublicationHelper:
 
 def main():
     try:
-        from local import WDUSER, WDPASS
+        import pystow
     except ImportError:
-        if "WDUSER" in os.environ and "WDPASS" in os.environ:
-            WDUSER = os.environ['WDUSER']
-            WDPASS = os.environ['WDPASS']
-        else:
-            import getpass
-            WDUSER = input('Wikidata Username: ')
-            WDPASS = getpass.getpass('Wikidata Password: ')
+        WDUSER = None
+        WDPASS = None
+    else:
+        WDUSER = pystow.get_config("wikidata", "username")
+        WDPASS = pystow.get_config("wikidata", "password")
 
     parser = argparse.ArgumentParser(description='run publication creator')
     parser.add_argument("ext_id", help="comma-separated list of IDs")

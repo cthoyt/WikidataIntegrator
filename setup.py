@@ -44,5 +44,6 @@ setup(
         'pyshex',
         'backoff',
         'shexer',
+        'pystow',
     ],
 )
