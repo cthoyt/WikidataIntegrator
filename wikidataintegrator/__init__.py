@@ -1,4 +1,4 @@
-import pkg_resources
+import importlib.metadata
 
 import wikidataintegrator.wdi_core
 import wikidataintegrator.wdi_fastrun
@@ -8,6 +8,6 @@ import wikidataintegrator.sdc_core
 import wikidataintegrator.wdi_rdf
 
 try:
-    __version__ = pkg_resources.get_distribution("wikidataintegrator").version
+    __version__ = importlib.metadata.version("wikidataintegrator")
 except Exception as e:
     __version__ = ""
