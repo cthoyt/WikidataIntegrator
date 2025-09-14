@@ -1,3 +1,4 @@
+import sys
 import time
 import requests
 import webbrowser
@@ -149,7 +150,8 @@ class WDLogin(object):
 
             if r['login']['result'] != 'Success':
                 reason = r['login']['reason']
-                raise ValueError(f'login failed: {reason}')
+                sys.stderr.write(f'login failed: {reason}')
+                raise sys.exit(0)
             elif debug:
                 print('Successfully logged in as', r['login']['lgusername'])
 
