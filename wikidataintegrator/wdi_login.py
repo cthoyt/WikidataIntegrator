@@ -148,8 +148,8 @@ class WDLogin(object):
             r = self.s.post(self.mediawiki_api_url, data=params).json()
 
             if r['login']['result'] != 'Success':
-                print('login failed:', r['login']['reason'])
-                raise ValueError('login FAILED!!')
+                reason = r['login']['reason']
+                raise ValueError(f'login failed: {reason}')
             elif debug:
                 print('Successfully logged in as', r['login']['lgusername'])
 
