@@ -11,10 +11,11 @@ BACKOFF_MAX_VALUE: maximum number of seconds to wait before retrying. wait time 
 USER_AGENT_DEFAULT: default user agent string used for http requests. Both to wikibase api, query service and others.
     See: https://meta.wikimedia.org/wiki/User-Agent_policy
 """
-import pkg_resources
+
+import importlib.metadata
 
 try:
-    __version__ = pkg_resources.get_distribution("wikidataintegrator").version
+    __version__ = importlib.metadata.version("wikidataintegrator")
 except Exception as e:
     __version__ = ""
 
